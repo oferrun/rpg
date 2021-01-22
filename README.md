@@ -10,3 +10,5 @@ Multi threaded rendering architecture + thread abstruction
 (Vectors, Matrices, simd support)
 ## Image and texture utils
 ## file system abstruction
+
+Parts of the code uses the excellect bx / bgfx library and the bitsquid foundation code.
