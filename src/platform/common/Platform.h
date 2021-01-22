@@ -1,7 +1,7 @@
 #ifndef PLATFORM_H_
 #define PLATFORM_H_
 
-class Game;
+class App;
 
 /**
  * Defines a platform abstraction.
@@ -21,12 +21,12 @@ public:
     /**
      * Creates a platform for the specified game which it will interact with.
      *
-     * @param game The game to create a platform for.
+     * @param app The app to create a platform for.
      *
      * @return The created platform interface.
      * @script{ignore}
      */
-    static Platform* create(Game* game);
+    static Platform* create(App* app);
 
     /**
      * Begins processing the platform messages.
@@ -39,7 +39,7 @@ public:
      *
      * @return The platform message pump return code.
      */
-    int enterMessagePump();
+    int enter_message_pump();
 
 };
 

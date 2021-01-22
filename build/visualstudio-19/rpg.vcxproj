@@ -107,7 +107,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../../src;../../external-deps/glew-2.2.0/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../src;../../external-deps/glew-2.2.0/include;../../external-deps</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -153,6 +153,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\app\App.h" />
+    <ClInclude Include="..\..\src\foundation\array.h" />
+    <ClInclude Include="..\..\src\foundation\collection_types.h" />
+    <ClInclude Include="..\..\src\foundation\hash.h" />
+    <ClInclude Include="..\..\src\foundation\memory.h" />
+    <ClInclude Include="..\..\src\foundation\memory_types.h" />
+    <ClInclude Include="..\..\src\foundation\murmur_hash.h" />
+    <ClInclude Include="..\..\src\foundation\queue.h" />
+    <ClInclude Include="..\..\src\foundation\string_stream.h" />
+    <ClInclude Include="..\..\src\foundation\temp_allocator.h" />
+    <ClInclude Include="..\..\src\foundation\types.h" />
+    <ClInclude Include="..\..\src\utils\ImageUtils.h" />
+    <ClInclude Include="App.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
@@ -160,9 +173,17 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\external-deps\bimg\src\image.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\os.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\thread.cpp" />
+    <ClCompile Include="..\..\src\app\App.cpp" />
+    <ClCompile Include="..\..\src\foundation\memory.cpp" />
+    <ClCompile Include="..\..\src\foundation\murmur_hash.cpp" />
+    <ClCompile Include="..\..\src\foundation\string_stream.cpp" />
     <ClCompile Include="..\..\src\platform\windows\main-windows.cpp" />
     <ClCompile Include="..\..\src\platform\windows\pch.cpp" />
     <ClCompile Include="..\..\src\platform\windows\Platform-windows.cpp" />
+    <ClCompile Include="..\..\src\utils\ImageUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="rpg.rc" />
