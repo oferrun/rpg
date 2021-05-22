@@ -1,0 +1,3 @@
+[submodule "external-deps/bgfx"]
+	path = external-deps/bgfx
+	url = https://github.com/bkaradzic/bgfx
