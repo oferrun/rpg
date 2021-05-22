@@ -1,3 +1,9 @@
 [submodule "external-deps/bgfx"]
 	path = external-deps/bgfx
 	url = https://github.com/bkaradzic/bgfx
+[submodule "external-deps/bimg"]
+	path = external-deps/bimg
+	url = https://github.com/bkaradzic/bimg
+[submodule "external-deps/bx"]
+	path = external-deps/bx
+	url = https://github.com/bkaradzic/bx
