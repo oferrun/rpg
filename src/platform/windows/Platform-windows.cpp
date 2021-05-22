@@ -4,8 +4,7 @@
 #include <windowsx.h>
 #include "app/App.h"
 
-#include <GL/glew.h>
-#include <GL/wglew.h>
+
 
 struct WindowCreationParams
 {
@@ -19,6 +18,58 @@ struct WindowCreationParams
 static HINSTANCE g_hInstance = NULL;
 static HWND g_hMainWindow = NULL;
 static HDC g_hdc = NULL;
+
+
+#define	MAX_QUED_EVENTS		256
+#define	MASK_QUED_EVENTS	( MAX_QUED_EVENTS - 1 )
+
+static PlatformEvent	g_eventQue[MAX_QUED_EVENTS];
+static int			g_eventHead = 0;
+static int			g_eventTail = 0;
+
+
+void platformQueEvent(PlatformEventType type, int value, int value2) {
+    PlatformEvent* ev = &g_eventQue[g_eventHead & MASK_QUED_EVENTS];
+
+    if (g_eventHead - g_eventTail >= MAX_QUED_EVENTS) {
+       // common->Printf("Sys_QueEvent: overflow\n");
+        // we are discarding an event, but don't leak memory
+       /* if (ev->evPtr) {
+            Mem_Free(ev->evPtr);
+        }*/
+        g_eventTail++;
+    }
+
+    g_eventHead++;
+
+    ev->eventType = type;
+    ev->value1 = value;
+    ev->value2 = value2;
+  /*  ev->evPtrLength = ptrLength;
+    ev->evPtr = ptr;
+    ev->inputDevice = inputDeviceNum;*/
+}
+
+PlatformEvent platformGetEvent()
+{
+    PlatformEvent	ev;
+
+    // return if we have data
+    if (g_eventHead > g_eventTail) {
+        g_eventTail++;
+        return g_eventQue[(g_eventTail - 1) & MASK_QUED_EVENTS];
+    }
+
+    // return the empty event 
+    memset(&ev, 0, sizeof(ev));
+
+    return ev;
+}
+
+void platformClearEvents()
+{
+    g_eventHead = g_eventTail = 0;
+}
 
 static bool createWindow(WindowCreationParams* params, HWND* hwnd, HDC* hdc)
 {
@@ -80,151 +131,6 @@ static bool createWindow(WindowCreationParams* params, HWND* hwnd, HDC* hdc)
 }
 
 
-//////////////
-
-#define DEFAULT_COLOR_BUFFER_SIZE 32
-#define DEFAULT_DEPTH_BUFFER_SIZE 24
-#define DEFAULT_STENCIL_BUFFER_SIZE 8
-static HGLRC g_hrc = 0;
-
-
-bool initRenderer(WindowCreationParams* params, HDC hdc, HWND hwnd)
-{
-    PIXELFORMATDESCRIPTOR pfd;
-    memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
-    pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
-    pfd.nVersion = 1;
-    pfd.dwFlags = PFD_DOUBLEBUFFER | PFD_SUPPORT_OPENGL | PFD_DRAW_TO_WINDOW;
-    pfd.iPixelType = PFD_TYPE_RGBA;
-    pfd.cColorBits = DEFAULT_COLOR_BUFFER_SIZE;
-    pfd.cDepthBits = DEFAULT_DEPTH_BUFFER_SIZE;
-    pfd.cStencilBits = DEFAULT_STENCIL_BUFFER_SIZE;
-    pfd.iLayerType = PFD_MAIN_PLANE;
-
-    int pixelFormat = ChoosePixelFormat(hdc, &pfd);
-    if (pixelFormat == 0)
-    {
-        DestroyWindow(hwnd);
-        // GP_ERROR("Failed to choose a pixel format.");
-        return false;
-    }
-
-    if (!SetPixelFormat(hdc, pixelFormat, &pfd))
-    {
-        DestroyWindow(hwnd);
-        //GP_ERROR("Failed to set the pixel format.");
-        return false;
-    }
-
-    HGLRC tempContext = wglCreateContext(hdc);
-    if (!tempContext)
-    {
-        DestroyWindow(hwnd);
-        //GP_ERROR("Failed to create temporary context for initialization.");
-        return false;
-    }
-    wglMakeCurrent(hdc, tempContext);
-
-
-    // Initialize GLEW
-    if (GLEW_OK != glewInit())
-    {
-        wglDeleteContext(tempContext);
-        DestroyWindow(hwnd);
-        //GP_ERROR("Failed to initialize GLEW.");
-        return false;
-    }
-
-#if 1
-    if (wglChoosePixelFormatARB && wglCreateContextAttribsARB)
-    {
-        // Choose pixel format using wglChoosePixelFormatARB, which allows us to specify
-        // additional attributes such as multisampling.
-        //
-        // Note: Keep multisampling attributes at the start of the attribute lists since code below
-        // assumes they are array elements 0 through 3.
-        int attribList[] = {
-            WGL_SAMPLES_ARB,  0,
-            WGL_SAMPLE_BUFFERS_ARB,  0,
-            WGL_DRAW_TO_WINDOW_ARB, GL_TRUE,
-            WGL_SUPPORT_OPENGL_ARB, GL_TRUE,
-            WGL_DOUBLE_BUFFER_ARB, GL_TRUE,
-            WGL_PIXEL_TYPE_ARB, WGL_TYPE_RGBA_ARB,
-            WGL_COLOR_BITS_ARB, DEFAULT_COLOR_BUFFER_SIZE,
-            WGL_DEPTH_BITS_ARB, DEFAULT_DEPTH_BUFFER_SIZE,
-            WGL_STENCIL_BITS_ARB, DEFAULT_STENCIL_BUFFER_SIZE,
-            0
-        };
-
-
-        UINT numFormats;
-        if (!wglChoosePixelFormatARB(hdc, attribList, NULL, 1, &pixelFormat, &numFormats) || numFormats == 0)
-        {
-
-
-            wglDeleteContext(tempContext);
-            DestroyWindow(hwnd);
-
-            return false;
-
-        }
-
-        // Create new/final window if needed
-        if (g_hMainWindow)
-        {
-            DestroyWindow(g_hMainWindow);
-
-            if (!createWindow(params, &g_hMainWindow, &g_hdc))
-            {
-                wglDeleteContext(tempContext);
-                return false;
-            }
-        }
-
-        // Set final pixel format for window
-        if (!SetPixelFormat(g_hdc, pixelFormat, &pfd))
-        {
-            // GP_ERROR("Failed to set the pixel format: %d.", (int)GetLastError());
-            return false;
-        }
-
-        // Create our new GL context
-        int attribs[] =
-        {
-            WGL_CONTEXT_MAJOR_VERSION_ARB, 4,
-            WGL_CONTEXT_MINOR_VERSION_ARB, 5,
-            0
-        };
-
-        if (!(g_hrc = wglCreateContextAttribsARB(g_hdc, 0, attribs)))
-        {
-            wglDeleteContext(tempContext);
-            // GP_ERROR("Failed to create OpenGL context.");
-            return false;
-        }
-
-        // Delete the old/temporary context and window
-        wglDeleteContext(tempContext);
-
-        // Make the new context current
-        if (!wglMakeCurrent(g_hdc, g_hrc) || !g_hrc)
-        {
-            //GP_ERROR("Failed to make the window current.");
-            return false;
-        }
-    }
-
-
-    //// Vertical sync.
-    //if (wglSwapIntervalEXT)
-    //    wglSwapIntervalEXT(__vsync ? 1 : 0);
-
-#endif
-    return true;
-}
-
-///////////
-
 
 static bool g_appIsInitialized = false;
 
@@ -260,76 +166,167 @@ LRESULT CALLBACK __WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         return 0;
 
+   
+    case WM_INPUT:
+    {
+        UINT dwSize;
+
+        GetRawInputData((HRAWINPUT)lParam, RID_INPUT, NULL, &dwSize,
+            sizeof(RAWINPUTHEADER));
+        LPBYTE lpb = new BYTE[dwSize];
+        if (lpb == NULL)
+        {
+            return 0;
+        }
+
+        if (GetRawInputData((HRAWINPUT)lParam, RID_INPUT, lpb, &dwSize,
+            sizeof(RAWINPUTHEADER)) != dwSize)
+            OutputDebugString(TEXT("GetRawInputData does not return correct size !\n"));
+
+        RAWINPUT* raw = (RAWINPUT*)lpb;
+
+        if (raw->header.dwType == RIM_TYPEKEYBOARD)
+        {
+            //hResult = StringCchPrintf(szTempOutput, STRSAFE_MAX_CCH, TEXT(" Kbd: make=%04x Flags:%04x Reserved:%04x ExtraInformation:%08x, msg=%04x VK=%04x \n"),
+            //    raw->data.keyboard.MakeCode,
+            //    raw->data.keyboard.Flags,
+            //    raw->data.keyboard.Reserved,
+            //    raw->data.keyboard.ExtraInformation,
+            //    raw->data.keyboard.Message,
+            //    raw->data.keyboard.VKey);
+            //if (FAILED(hResult))
+            //{
+            //    // TODO: write error handler
+            //}
+            OutputDebugString(L"key event\n");
+        }
+        else if (raw->header.dwType == RIM_TYPEMOUSE)
+        {
+            //hResult = StringCchPrintf(szTempOutput, STRSAFE_MAX_CCH, TEXT("Mouse: usFlags=%04x ulButtons=%04x usButtonFlags=%04x usButtonData=%04x ulRawButtons=%04x lLastX=%04x lLastY=%04x ulExtraInformation=%04x\r\n"),
+            //    raw->data.mouse.usFlags,
+            //    raw->data.mouse.ulButtons,
+            //    raw->data.mouse.usButtonFlags,
+            //    raw->data.mouse.usButtonData,
+            //    raw->data.mouse.ulRawButtons,
+            //    raw->data.mouse.lLastX,
+            //    raw->data.mouse.lLastY,
+            //    raw->data.mouse.ulExtraInformation);
+
+            //if (FAILED(hResult))
+            //{
+            //    // TODO: write error handler
+            //}
+            //OutputDebugString(szTempOutput);
+           // OutputDebugString(L"mouse event\n");
+        }
+
+        delete[] lpb;
+        return 0;
+    }
+
     case WM_LBUTTONDOWN:
     {
-        int x = GET_X_LPARAM(lParam);
-        int y = GET_Y_LPARAM(lParam);
+        platformQueEvent(PlatformEventType::PE_KEY, (int)PlatformKeys::K_MOUSE1, 1);
 
-      
+
         return 0;
     }
     case WM_LBUTTONUP:
     {
-        int x = GET_X_LPARAM(lParam);
-        int y = GET_Y_LPARAM(lParam);
-
        
+        platformQueEvent(PlatformEventType::PE_KEY, (int)PlatformKeys::K_MOUSE1, 0);
+
         return 0;
     }
+
     case WM_RBUTTONDOWN:
-       
+    {
+        platformQueEvent(PlatformEventType::PE_KEY, (int)PlatformKeys::K_MOUSE2, 1);
         break;
+    }
+        
 
     case WM_RBUTTONUP:
-      
+    {
+        platformQueEvent(PlatformEventType::PE_KEY, (int)PlatformKeys::K_MOUSE2, 0);
         break;
-
+    }
     case WM_MBUTTONDOWN:
-       
+    {
+        platformQueEvent(PlatformEventType::PE_KEY, (int)PlatformKeys::K_MOUSE3, 1);
         break;
-
+    }
     case WM_MBUTTONUP:
-        
+    {
+        platformQueEvent(PlatformEventType::PE_KEY, (int)PlatformKeys::K_MOUSE3, 0);
         break;
-
+    }
     case WM_MOUSEMOVE:
     {
-        int x = GET_X_LPARAM(lParam);
-        int y = GET_Y_LPARAM(lParam);
+        const int x = GET_X_LPARAM(lParam);
+        const int y = GET_Y_LPARAM(lParam);
 
+        // Generate an event
+        platformQueEvent(PlatformEventType::PE_MOUSE_ABSOLUTE, x, y);
       
         break;
     }
 
     case WM_MOUSEWHEEL:
-        tagPOINT point;
-        point.x = GET_X_LPARAM(lParam);
-        point.y = GET_Y_LPARAM(lParam);
-      //  ScreenToClient(__hwnd, &point);
-       
+    {
+        int delta = GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA;
+        int key = delta < 0 ? (int)PlatformKeys::K_MWHEELDOWN : (int)PlatformKeys::K_MWHEELUP;
+        delta = abs(delta);
+        while (delta-- > 0) {
+            platformQueEvent(PlatformEventType::PE_KEY, key, true);
+            platformQueEvent(PlatformEventType::PE_KEY, key, false);
+        }
+
+
         break;
+    }
+        
 
     case WM_KEYDOWN:
-        if (wParam == VK_SHIFT || wParam == VK_LSHIFT || wParam == VK_RSHIFT)
-            shiftDown = true;
+    {
+        int key;
+        key = ((lParam >> 16) & 0xFF) | (((lParam >> 24) & 1) << 7);
+        if (key == (int)PlatformKeys::K_PRINTSCREEN) {
+            // don't queue printscreen keys.  Since windows doesn't send us key
+            // down events for this, we handle queueing them with DirectInput
+            break;
+        }
+        //else if (key == K_LCTRL || key == K_LALT || key == K_RCTRL || key == K_RALT) {
+        //    // let direct-input handle this because windows sends Alt-Gr
+        //    // as two events (ctrl then alt)
+        //    break;
+        //}
+        platformQueEvent(PlatformEventType::PE_KEY, key, true);
 
-        if (wParam == VK_CAPITAL)
-            capsOn = !capsOn;
-
-       
         break;
-
+    }
     case WM_KEYUP:
-        if (wParam == VK_SHIFT || wParam == VK_LSHIFT || wParam == VK_RSHIFT)
-            shiftDown = false;
-
-       
+    {
+        int key;
+        key = ((lParam >> 16) & 0xFF) | (((lParam >> 24) & 1) << 7);
+        if (key == (int)PlatformKeys::K_PRINTSCREEN) {
+            // don't queue printscreen keys.  Since windows doesn't send us key
+            // down events for this, we handle queueing them with DirectInput
+            break;
+        }
+        //else if (key == K_LCTRL || key == K_LALT || key == K_RCTRL || key == K_RALT) {
+        //    // let direct-input handle this because windows sends Alt-Gr
+        //    // as two events (ctrl then alt)
+        //    break;
+        //}
+        platformQueEvent(PlatformEventType::PE_KEY, key, false);
         break;
-
+    }
     case WM_CHAR:
-       
+    {
+        platformQueEvent(PlatformEventType::PE_CHAR, (int)wParam, 0);
         break;
-
+    }
     case WM_UNICHAR:
      
         break;
@@ -404,11 +401,13 @@ Platform* Platform::create(App* app)
     g_hMainWindow = hwnd;
     g_hdc = hdc;
 
-    initRenderer(&params, hdc, hwnd);
+
 
    
     // Show the window.
     ShowWindow(g_hMainWindow, SW_SHOW);
+
+
 
     g_theApp = app;
     g_appIsInitialized = true;
@@ -421,7 +420,22 @@ error:
     
 }
 
+static void systemPumpEvents()
+{
+    MSG msg;
 
+    // pump the message loop
+    while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+        if (!GetMessage(&msg, NULL, 0, 0)) {
+            g_theApp->shut_down();
+            ExitProcess(0);
+        }
+
+
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+}
 
 
 /**
@@ -438,25 +452,32 @@ int Platform::enter_message_pump()
   
     g_theApp->start();
 
-    MSG msg;
+    RAWINPUTDEVICE Rid[2];
+
+    Rid[0].usUsagePage = 0x01;
+    Rid[0].usUsage = 0x02;
+    Rid[0].dwFlags = RIDEV_INPUTSINK;   // adds HID mouse and also ignores legacy mouse messages
+    Rid[0].hwndTarget = g_hMainWindow;
+
+    Rid[1].usUsagePage = 0x01;
+    Rid[1].usUsage = 0x06;
+    Rid[1].dwFlags = RIDEV_INPUTSINK;   // adds HID keyboard and also ignores legacy keyboard messages
+    Rid[1].hwndTarget = g_hMainWindow;
+
+    if (RegisterRawInputDevices(Rid, 2, sizeof(Rid[0])) == FALSE) {
+        //registration failed. Call GetLastError for the cause of the error
+        int ofer = 4;
+    }
+
+
     while (true)
     {
-        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+        systemPumpEvents();
+        
+           
+        g_theApp->do_frame();
 
-            if (msg.message == WM_QUIT)
-            {
-                g_theApp->shut_down();
-                return (int)msg.wParam;
-            }
-        }
-        else
-        {
-            g_theApp->do_frame();
-            SwapBuffers(g_hdc);
-        }
+       
     }
     return 0;
 }

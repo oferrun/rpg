@@ -173,9 +173,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\external-deps\bimg\src\image.cpp" />
-    <ClCompile Include="..\..\external-deps\bx\src\os.cpp" />
-    <ClCompile Include="..\..\external-deps\bx\src\thread.cpp" />
     <ClCompile Include="..\..\src\app\App.cpp" />
     <ClCompile Include="..\..\src\foundation\memory.cpp" />
     <ClCompile Include="..\..\src\foundation\murmur_hash.cpp" />

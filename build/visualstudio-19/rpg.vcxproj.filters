@@ -25,15 +25,6 @@
     <Filter Include="Source Files\app">
       <UniqueIdentifier>{9a1c5865-781a-4fbb-bf95-d88c13eb07b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\renderer">
-      <UniqueIdentifier>{0c3a9fb2-7bdf-4281-bc20-4196d00cfd19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\bimg">
-      <UniqueIdentifier>{3e3518af-0ebd-4219-8825-0d49e95d0ef1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\bx">
-      <UniqueIdentifier>{87655aa1-bd21-4fa7-8e13-8917c1298475}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -115,15 +106,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\utils\ImageUtils.cpp">
       <Filter>Source Files\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external-deps\bimg\src\image.cpp">
-      <Filter>Source Files\bimg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external-deps\bx\src\thread.cpp">
-      <Filter>Source Files\bx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external-deps\bx\src\os.cpp">
-      <Filter>Source Files\bx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
