@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\external-deps\bgfx\include\bgfx\bgfx.h" />
     <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\astc_file.h" />
     <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\codec.h" />
     <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\endpoint_codec.h" />

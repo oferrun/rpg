@@ -18,6 +18,8 @@ struct WindowCreationParams
 static HINSTANCE g_hInstance = NULL;
 static HWND g_hMainWindow = NULL;
 static HDC g_hdc = NULL;
+static unsigned int g_mainWindowWidth = 1024;
+static unsigned int g_mainWindowHeight = 768;
 
 
 #define	MAX_QUED_EVENTS		256
@@ -389,8 +391,8 @@ Platform* Platform::create(App* app)
     }
 
    
-    params.rect.right = 1024;
-    params.rect.bottom = 768;
+    params.rect.right = g_mainWindowWidth;
+    params.rect.bottom = g_mainWindowHeight;
     params.resizable = true;
 
     if (!createWindow(&params, &hwnd, &hdc))
@@ -450,7 +452,7 @@ static void systemPumpEvents()
 int Platform::enter_message_pump()
 {
   
-    g_theApp->start();
+    g_theApp->start(g_hMainWindow, g_mainWindowWidth, g_mainWindowHeight);
 
     RAWINPUTDEVICE Rid[2];
 

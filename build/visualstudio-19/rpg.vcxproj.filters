@@ -132,6 +132,9 @@
     <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\endpoint_codec.h">
       <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\external-deps\bgfx\include\bgfx\bgfx.h">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\windows\pch.cpp">
