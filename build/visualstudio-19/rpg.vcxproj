@@ -104,10 +104,10 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;__STDC_FORMAT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>../../src;../../external-deps/glew-2.2.0/include;../../external-deps</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../external-deps/bx/include/compat/msvc;../../src;../../external-deps/glew-2.2.0/include;../../external-deps;../../external-deps/bx/include;../../external-deps/bimg/include;../../external-deps/bgfx/include;../../external-deps/bgfx/3rdparty/dxsdk/include;../../external-deps/bgfx/3rdparty/khronos;../../external-deps/bimg/3rdparty/astc-codec/include;../../external-deps/bgfx/3rdparty;../../external-deps/bimg/3rdparty/astc-codec</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -153,6 +153,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\astc_file.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\codec.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\endpoint_codec.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\footprint.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\integer_sequence_codec.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\intermediate_astc_block.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\logical_astc_block.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\partition.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\physical_astc_block.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\quantization.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\types.h" />
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\weight_infill.h" />
     <ClInclude Include="..\..\src\app\App.h" />
     <ClInclude Include="..\..\src\foundation\array.h" />
     <ClInclude Include="..\..\src\foundation\collection_types.h" />
@@ -173,6 +185,59 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\external-deps\bgfx\src\bgfx.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\debug_renderdoc.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\dxgi.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\glcontext_wgl.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\nvapi.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_d3d11.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_d3d12.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_d3d9.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_gl.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_gnm.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_noop.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_nvn.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_vk.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_webgpu.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\shader.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\shader_dx9bc.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\shader_dxbc.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\shader_spirv.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\topology.cpp" />
+    <ClCompile Include="..\..\external-deps\bgfx\src\vertexlayout.cpp" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\astc_file.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\codec.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\endpoint_codec.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\footprint.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\integer_sequence_codec.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\intermediate_astc_block.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\logical_astc_block.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\partition.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\physical_astc_block.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\quantization.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\weight_infill.cc" />
+    <ClCompile Include="..\..\external-deps\bimg\src\image.cpp" />
+    <ClCompile Include="..\..\external-deps\bimg\src\image_gnf.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\allocator.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\bx.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\commandline.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\crtnone.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\debug.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\dtoa.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\easing.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\file.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\filepath.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\hash.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\math.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\mutex.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\os.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\process.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\semaphore.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\sort.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\string.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\thread.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\timer.cpp" />
+    <ClCompile Include="..\..\external-deps\bx\src\url.cpp" />
     <ClCompile Include="..\..\src\app\App.cpp" />
     <ClCompile Include="..\..\src\foundation\memory.cpp" />
     <ClCompile Include="..\..\src\foundation\murmur_hash.cpp" />
@@ -188,6 +253,12 @@
   <ItemGroup>
     <Image Include="rpg.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\BUILD.bazel" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

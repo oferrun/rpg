@@ -25,6 +25,21 @@
     <Filter Include="Source Files\app">
       <UniqueIdentifier>{9a1c5865-781a-4fbb-bf95-d88c13eb07b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\bgfx">
+      <UniqueIdentifier>{ffe11ada-f0c8-4b09-8717-9981085df864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\bgfx\bx">
+      <UniqueIdentifier>{e3c6f83d-3ee8-4efd-8781-c2044eca4c21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\bgfx\bimg">
+      <UniqueIdentifier>{65b3366c-f418-4e0b-98a8-1a8bc90785ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\bgfx\bgfx">
+      <UniqueIdentifier>{12cdbd34-f8db-4df2-a08f-b976b1f8cbc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\bgfx\bimg\astc-codec">
+      <UniqueIdentifier>{cf4684c6-f268-444d-9867-0f268f5ad859}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -81,6 +96,42 @@
     <ClInclude Include="..\..\src\app\App.h">
       <Filter>Source Files\app</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\footprint.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\integer_sequence_codec.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\intermediate_astc_block.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\logical_astc_block.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\partition.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\physical_astc_block.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\quantization.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\types.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\weight_infill.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\astc_file.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\codec.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\endpoint_codec.h">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\windows\pch.cpp">
@@ -107,6 +158,165 @@
     <ClCompile Include="..\..\src\utils\ImageUtils.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\os.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\thread.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\bx.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\semaphore.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\mutex.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\math.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\filepath.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\string.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\crtnone.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\dtoa.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\easing.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\file.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\hash.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\process.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\sort.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\timer.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\url.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\commandline.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\allocator.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\bgfx.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bx\src\debug.cpp">
+      <Filter>Source Files\bgfx\bx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_webgpu.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_d3d9.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_d3d11.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_d3d12.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_gl.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_vk.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\topology.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\vertexlayout.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\shader.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_noop.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\glcontext_wgl.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\src\image_gnf.cpp">
+      <Filter>Source Files\bgfx\bimg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\src\image.cpp">
+      <Filter>Source Files\bgfx\bimg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\debug_renderdoc.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\dxgi.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\nvapi.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_nvn.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\shader_dx9bc.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\shader_dxbc.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\shader_spirv.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bgfx\src\renderer_gnm.cpp">
+      <Filter>Source Files\bgfx\bgfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\integer_sequence_codec.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\intermediate_astc_block.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\logical_astc_block.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\partition.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\physical_astc_block.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\quantization.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\weight_infill.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\astc_file.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\codec.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\endpoint_codec.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\footprint.cc">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="rpg.rc">
@@ -120,5 +330,15 @@
     <Image Include="rpg.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\BUILD.bazel">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\external-deps\bimg\3rdparty\astc-codec\src\decoder\CMakeLists.txt">
+      <Filter>Source Files\bgfx\bimg\astc-codec</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #include "App.h"
-#include "bx/include/bx.h"
-#include "bx/include/thread.h"
-#include "bx/include/os.h"
+#include <bx/bx.h>
+#include <bx/thread.h>
+#include <bx/os.h>
 #include "platform/common/Platform.h"
 
 

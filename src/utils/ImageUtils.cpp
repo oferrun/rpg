@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <memory.h>
 #include "ImageUtils.h"
-#include "bimg/include/bimg.h"
+#include <bimg/bimg.h>
 
 namespace Sapphire
 {

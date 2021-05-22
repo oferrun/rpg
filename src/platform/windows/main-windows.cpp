@@ -10,8 +10,9 @@
 #include "platform/common/Platform.h"
 #include "utils/ImageUtils.h"
 #include "app/App.h"
-#include "bx/include/bx.h"
-#include "bimg/include/bimg.h"
+#include <bx/bx.h>
+#include <bimg/bimg.h>
+
 
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
